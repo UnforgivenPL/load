@@ -14,6 +14,6 @@ public class HelloWorldPage implements LoadPage {
 
   @Override
   public Object get(List<String> path, Map<String, String[]> parameters) {
-    return "hello, dear world";
+    return "hello, dear world; request path was "+ String.join(", ", path);
   }
 }

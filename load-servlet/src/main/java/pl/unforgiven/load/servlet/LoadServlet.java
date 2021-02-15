@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 @WebServlet(value = "/", loadOnStartup = 1)
@@ -39,9 +39,14 @@ public class LoadServlet extends HttpServlet {
     if(this.pages.size() != 1)
       resp.getOutputStream().println("No page or too many pages registered for the request. Cannot continue.");
     else {
+      String requestUri = req.getRequestURI();
+      if(requestUri.startsWith("/"))
+        requestUri = requestUri.substring(1);
+
       LOGGER.info("parameters {}", req.getParameterMap());
-      LOGGER.info("path {}", req.getRequestURI());
-      resp.getOutputStream().println(this.pages.get(0).get(Collections.emptyList(), req.getParameterMap()).toString());
+      LOGGER.info("path {}", requestUri);
+      
+      resp.getOutputStream().println(this.pages.get(0).get(Arrays.asList(req.getRequestURI().split("\\/").clone()), req.getParameterMap()).toString());
     }
   }
 }
