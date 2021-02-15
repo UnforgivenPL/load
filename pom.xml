@@ -4,6 +4,11 @@
     <groupId>pl.unforgiven</groupId>
     <artifactId>load-container</artifactId>
     <version>0.1-SNAPSHOT</version>
+    <modules>
+        <module>load-core</module>
+        <module>load-demo</module>
+        <module>load-servlet</module>
+    </modules>
 
     <name>LOAD: minimalistic webapp library</name>
     <description>Container project for everything related to LOAD. Probably not to be imported.</description>
