@@ -44,7 +44,6 @@ public class LoadServlet extends HttpServlet {
         if (requestUri.startsWith("/"))
           requestUri = requestUri.substring(1);
 
-        LOGGER.info("parameters {}", req.getParameterMap().keySet());
         LOGGER.info("path {}", requestUri);
 
         resp.getOutputStream().println(this.pages.get(0).get(Arrays.asList(requestUri.split("/").clone()), req.getParameterMap()).toString());
