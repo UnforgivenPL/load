@@ -46,7 +46,7 @@ public class LoadServlet extends HttpServlet {
       LOGGER.info("parameters {}", req.getParameterMap());
       LOGGER.info("path {}", requestUri);
       
-      resp.getOutputStream().println(this.pages.get(0).get(Arrays.asList(req.getRequestURI().split("\\/").clone()), req.getParameterMap()).toString());
+      resp.getOutputStream().println(this.pages.get(0).get(Arrays.asList(requestUri.split("/").clone()), req.getParameterMap()).toString());
     }
   }
 }
