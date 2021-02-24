@@ -36,17 +36,21 @@ public class LoadServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    if(this.pages.size() != 1)
-      resp.getOutputStream().println("No page or too many pages registered for the request. Cannot continue.");
-    else {
-      String requestUri = req.getRequestURI();
-      if(requestUri.startsWith("/"))
-        requestUri = requestUri.substring(1);
+    try {
+      if (this.pages.size() != 1)
+        resp.getOutputStream().println("No page or too many pages registered for the request. Cannot continue.");
+      else {
+        String requestUri = req.getRequestURI();
+        if (requestUri.startsWith("/"))
+          requestUri = requestUri.substring(1);
 
-      LOGGER.info("parameters {}", req.getParameterMap());
-      LOGGER.info("path {}", requestUri);
-      
-      resp.getOutputStream().println(this.pages.get(0).get(Arrays.asList(requestUri.split("/").clone()), req.getParameterMap()).toString());
+        LOGGER.info("parameters {}", req.getParameterMap().keySet());
+        LOGGER.info("path {}", requestUri);
+
+        resp.getOutputStream().println(this.pages.get(0).get(Arrays.asList(requestUri.split("/").clone()), req.getParameterMap()).toString());
+      }
+    } catch (IOException ioe) {
+      LOGGER.error("could not write output", ioe);
     }
   }
 }
