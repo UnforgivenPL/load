@@ -131,7 +131,8 @@ public class PathMatcher {
     // figure out the parameter, but without brackets
     final String paramDefinition = pattern.substring(start+1, end);
 
-    final String correspondingPathElement = pathElement.substring(start, pathElement.length()-(pattern.length()-end)+1);
+    // it may happen that the end index is further than the start index, hence the max here
+    final String correspondingPathElement = pathElement.substring(start, Math.max(pathElement.length()-(pattern.length()-end)+1, start));
 
     // see if there is regular expression
     final int colonIndex = paramDefinition.indexOf(':');

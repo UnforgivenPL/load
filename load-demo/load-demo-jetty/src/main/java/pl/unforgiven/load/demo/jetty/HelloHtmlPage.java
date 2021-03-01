@@ -6,16 +6,11 @@ import pl.unforgiven.load.core.path.Path;
 import java.util.List;
 import java.util.Map;
 
-/**
- * A page displaying a simple "hello, world" for jetty.
- * @author miki
- * @since 2021-02-14
- */
-@Path
-public class HelloWorldPage implements LoadPage {
+@Path("html")
+public class HelloHtmlPage implements LoadPage {
 
   @Override
   public Object get(List<String> path, Map<String, List<String>> parameters) {
-    return "hello, dear world; request path was "+ String.join(", ", path);
+    return "<html><head><title>Hello, Load!</title><body><p>Hello, world.</p></body></html>";
   }
 }

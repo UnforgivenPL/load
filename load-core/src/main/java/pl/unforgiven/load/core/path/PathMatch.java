@@ -33,7 +33,7 @@ public final class PathMatch {
     this.parameters = parameters;
   }
 
-  public Class<?> getMatchingType() {
+  public Class<? extends LoadPage> getMatchingType() {
     return matchingType;
   }
 

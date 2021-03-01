@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 class PathMatcherTest {
 
@@ -61,6 +62,16 @@ class PathMatcherTest {
     this.assertOneParameter("num", "42");
 
     Assertions.assertFalse(matcher.isMatching("{num:\\d+}", "42a", this.parameters));
+    Assertions.assertFalse(matcher.isMatching("{num:\\d+}", "a42", this.parameters));
+  }
+
+  @Test
+  void testPrePostFixedParameterRegexp() {
+    Assertions.assertTrue(matcher.isMatching("some-{num:[A-F0-9]+}-things", "some-FF-things", this.parameters));
+    this.assertOneParameter("num", "FF");
+    Stream.of("some-things", "somethings", "some-Ff-things", "nope", "", "some-19a23D-thing")
+        .forEach(text -> Assertions.assertFalse(matcher.isMatching("some-{num:[A-F0-9]+}-things", text, this.parameters)));
+
   }
 
 }
