@@ -70,11 +70,7 @@ public class PathMatcher {
         .collect(Collectors.toList());
   }
 
-  private Optional<PathMatch> getPathMatch(Class<? extends LoadPage> page, Path annotation, String[] path) {
-    // first check: if path definition length is more than path, no match
-    if(annotation.value().length > path.length || annotation.value().length == 0)
-      return Optional.empty();
-
+  private List<String> unpackRepeatedGroup(Path annotation, String[] path) {
     // there can be only one path that ends with *, and it must have a named parameter in it
     int repeatedIndex = -1;
     int index = 0;
@@ -91,6 +87,15 @@ public class PathMatcher {
       else parts.add(part);
       index++;
     }
+    return parts;
+  }
+
+  private Optional<PathMatch> getPathMatch(Class<? extends LoadPage> page, Path annotation, String[] path) {
+    // first check: if path definition length is more than path, no match
+    if(annotation.value().length > path.length || annotation.value().length == 0)
+      return Optional.empty();
+
+    final List<String> parts = this.unpackRepeatedGroup(annotation, path);
 
     // now, both parts and path must have the same size to have a chance to match
     if(parts.size() != path.length)
