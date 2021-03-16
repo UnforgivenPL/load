@@ -3,6 +3,10 @@ package pl.unforgiven.load.servlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.unforgiven.load.core.LoadPage;
+import pl.unforgiven.load.core.html.Html;
+import pl.unforgiven.load.core.html.HtmlStringFactory;
+import pl.unforgiven.load.core.html.Node;
+import pl.unforgiven.load.core.html.Root;
 import pl.unforgiven.load.core.path.PathMatch;
 import pl.unforgiven.load.core.path.PathMatcher;
 
@@ -19,6 +23,8 @@ import java.util.Optional;
 public class LoadServlet extends HttpServlet {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(LoadServlet.class);
+
+  private final HtmlStringFactory factory = new HtmlStringFactory();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
@@ -38,7 +44,9 @@ public class LoadServlet extends HttpServlet {
         final PathMatch pathMatch = perhapsPath.get();
         final LoadPage page = pathMatch.getMatchingType().getConstructor().newInstance();
         final Object output = page.get(Arrays.asList(pathSplit), pathMatch.getParameters());
-        resp.getOutputStream().println(output.toString());
+        if(output instanceof Node)
+          this.processOutput((Node) output, resp);
+        else resp.getOutputStream().println(output.toString());
       }
       else resp.getOutputStream().print("no LoadPage found for path: "+requestUri);
     } catch (IOException ioe) {
@@ -46,5 +54,11 @@ public class LoadServlet extends HttpServlet {
     } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
       LOGGER.error("cannot create page due to {}", e.getMessage(), e);
     }
+  }
+
+  private void processOutput(Node node, HttpServletResponse response) throws IOException {
+    if(!(node instanceof Root))
+      node = new Html().withBody(node);
+    response.getOutputStream().print(this.factory.build(node));
   }
 }
