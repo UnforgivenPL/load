@@ -20,6 +20,10 @@ public class Tag implements NamedNode, HasNodes, HasAttributes {
 
   private final List<Node> nodes = new ArrayList<>();
 
+  /**
+   * Creates the tag with the given name.
+   * @param name Name of the node. Must not be {@code null} nor empty.
+   */
   public Tag(String name) {
     this.name = name;
   }
@@ -29,22 +33,45 @@ public class Tag implements NamedNode, HasNodes, HasAttributes {
     return this.getName();
   }
 
+  /**
+   * Same as {@link #getNodeName()}.
+   * @return Name.
+   * @see #getNodeName()
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Adds an empty attribute, overwriting its previous value.
+   * @param name Attribute name.
+   */
   public void addAttribute(String name) {
     this.attributes.put(name, "");
   }
 
+  /**
+   * Adds an attribute with given value, overwriting the previous one.
+   * @param name Attribute name.
+   * @param value Attribute value.
+   */
   public void addAttribute(String name, String value) {
     this.attributes.put(name, value);
   }
 
+  /**
+   * Removes an attribute, if it existed.
+   * @param name Attribute name.
+   */
   public void removeAttribute(String name) {
     this.attributes.remove(name);
   }
 
+  /**
+   * Checks whether this object has an attribute with given name.
+   * @param name Attribute name.
+   * @return {@code true} when there is an attribute with exactly the same name, {@code false} otherwise.
+   */
   public boolean hasAttribute(String name) {
     return this.attributes.containsKey(name);
   }
@@ -64,10 +91,18 @@ public class Tag implements NamedNode, HasNodes, HasAttributes {
     return Collections.unmodifiableList(nodes);
   }
 
+  /**
+   * Adds a node.
+   * @param node Node to add.
+   */
   public void addNode(Node node) {
     this.nodes.add(node);
   }
 
+  /**
+   * Removes a node.
+   * @param node Node to remove.
+   */
   public void removeNode(Node node) {
     this.nodes.remove(node);
   }

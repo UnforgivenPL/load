@@ -4,25 +4,38 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Basic HTML element.
+ * Basic {@code <html>} element.
  * @author miki
  * @since 2021-03-07
  */
-public class Html implements NamedNode, HasNodes {
+public class Html implements Root, NamedNode, HasNodes {
 
-  private final Head head = new Head();
+  private final Tag head = new Tag("head");
 
-  private final Body body = new Body();
+  private final Tag body = new Tag("body");
 
-  public Head getHead() {
+  /**
+   * The {@code <head>} element.
+   * @return A {@link Tag} of the head.
+   */
+  public Tag getHead() {
     return head;
   }
 
-  public Body getBody() {
+  /**
+   * The {@code <body>} element.
+   * @return A {@link Tag} of the body.
+   */
+  public Tag getBody() {
     return body;
   }
 
-  public Html withBody(Node... nodes) {
+  /**
+   * Adds given nodes to the body and returns itself.
+   * @param nodes Nodes to add.
+   * @return This.
+   */
+  public final Html withBody(Node... nodes) {
     for (Node node : nodes)
       this.getBody().addNode(node);
     return this;

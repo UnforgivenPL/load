@@ -16,10 +16,20 @@ public class Text implements Node, HasStringContent {
     return content;
   }
 
+  /**
+   * Sets the content, overwriting previous one.
+   * @param content Content.
+   */
   public void setContent(String content) {
     this.content = content;
   }
 
+  /**
+   * Sets the content and returns itself.
+   * @param content Content to set.
+   * @return This.
+   * @see #setContent(String)
+   */
   public final Text withContent(String content) {
     this.setContent(content);
     return this;
