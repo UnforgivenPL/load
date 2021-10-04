@@ -13,7 +13,7 @@ import java.util.Map;
 @IndexSubclasses
 public interface LoadPage {
 
-  default Object get(List<String> path, Map<String, List<String>> parameters) {
+  default Object get(List<String> path, Map<String, List<String>> parameters, LoadData data) {
     return "not implemented";
   }
 

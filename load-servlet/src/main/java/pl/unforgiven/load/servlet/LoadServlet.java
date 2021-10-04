@@ -43,7 +43,8 @@ public class LoadServlet extends HttpServlet {
       if (perhapsPath.isPresent()) {
         final PathMatch pathMatch = perhapsPath.get();
         final LoadPage page = pathMatch.getMatchingType().getConstructor().newInstance();
-        final Object output = page.get(Arrays.asList(pathSplit), pathMatch.getParameters());
+
+        final Object output = page.get(Arrays.asList(pathSplit), pathMatch.getParameters(), new HttpSessionDataWrapper(req.getSession()));
         if(output instanceof Node)
           this.processOutput((Node) output, resp);
         else resp.getOutputStream().println(output.toString());
