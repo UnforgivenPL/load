@@ -1,5 +1,6 @@
 package pl.unforgiven.load.demo.jetty;
 
+import pl.unforgiven.load.core.LoadData;
 import pl.unforgiven.load.core.LoadPage;
 import pl.unforgiven.load.core.path.Path;
 
@@ -15,7 +16,7 @@ import java.util.Map;
 public class HelloWorldPage implements LoadPage {
 
   @Override
-  public Object get(List<String> path, Map<String, List<String>> parameters) {
+  public Object get(List<String> path, Map<String, List<String>> parameters, LoadData data) {
     return "hello, dear world; request path was "+ String.join(", ", path);
   }
 }
