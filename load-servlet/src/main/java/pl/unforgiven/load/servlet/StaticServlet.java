@@ -98,8 +98,7 @@ abstract class StaticServlet extends HttpServlet {
     String ifNoneMatch = request.getHeader("If-None-Match");
 
     if (ifNoneMatch != null) {
-      String[] matches = ifNoneMatch.split("\\s*,\\s*");
-      Arrays.sort(matches);
+      String[] matches = Arrays.stream(ifNoneMatch.split(",")).map(String::trim).sorted().toArray(String[]::new);
       return (Arrays.binarySearch(matches, eTag) > -1 || Arrays.binarySearch(matches, "*") > -1);
     }
     else {
