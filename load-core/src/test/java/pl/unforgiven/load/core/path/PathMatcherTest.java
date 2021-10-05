@@ -45,6 +45,12 @@ class PathMatcherTest {
   }
 
   @Test
+  void testOneWholeParameterRegexp() {
+    Assertions.assertTrue(matcher.isMatching("{img:[a-zA-Z0-9_-]+}", "world", this.parameters));
+    this.assertOneParameter("img", "world");
+  }
+
+  @Test
   void testPrePostFixedParameterNoRegexp() {
     Assertions.assertTrue(matcher.isMatching("some{var}", "something", this.parameters));
     this.assertOneParameter("var", "thing");

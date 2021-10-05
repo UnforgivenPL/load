@@ -6,8 +6,9 @@ import java.io.InputStream;
 /**
  * Basic interface for a static resource.
  * @author BalusC / OmniFaces (via https://stackoverflow.com/a/29991447/384484)
+ * @since 2021-10-05
  */
-public interface StaticResource {
+public interface Resource {
 
   /**
    * Returns the file name of the resource. This must be unique across all static resources. If any, the file

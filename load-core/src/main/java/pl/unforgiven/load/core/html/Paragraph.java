@@ -21,4 +21,10 @@ public class Paragraph extends Tag {
     return this;
   }
 
+  public final Paragraph withNodes(Node... nodes) {
+    for(Node node: nodes)
+      this.addNode(node);
+    return this;
+  }
+
 }

@@ -84,7 +84,7 @@ abstract class StaticServlet extends HttpServlet {
    * @throws IllegalArgumentException When the request is mangled in such way that it's not recognizable as a valid
    * static resource request. The servlet will then return a HTTP 400 error.
    */
-  protected abstract Optional<StaticResource> getStaticResource(HttpServletRequest request) throws IOException;
+  protected abstract Optional<Resource> getStaticResource(HttpServletRequest request) throws IOException;
 
   private boolean setCacheHeaders(HttpServletRequest request, HttpServletResponse response, String fileName, long lastModified) {
     String eTag = String.format(ETAG_HEADER, fileName, lastModified);
@@ -117,7 +117,7 @@ abstract class StaticServlet extends HttpServlet {
     }
   }
 
-  private void writeContent(HttpServletResponse response, StaticResource resource) throws IOException {
+  private void writeContent(HttpServletResponse response, Resource resource) throws IOException {
     try (
         ReadableByteChannel inputChannel = Channels.newChannel(resource.getInputStream());
         WritableByteChannel outputChannel = Channels.newChannel(response.getOutputStream())

@@ -17,11 +17,8 @@ import java.util.Optional;
  * @author miki
  * @since 2021-10-04
  */
-@WebServlet(value = {"/static/*", ResourceServlet.FAVICON_PATH}, loadOnStartup = 1)
+@WebServlet(value = {"/"+ ReservedPaths.STATIC_PATH+"/*", "/"+ReservedPaths.FAVICON_PATH}, loadOnStartup = 1)
 public class ResourceServlet extends StaticServlet {
-
-  @SuppressWarnings("squid:S1075") // uris should not be hardcoded, but this one has to be - it is the "favicon.ico" request
-  public static final String FAVICON_PATH = "/favicon.ico";
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ResourceServlet.class);
 
@@ -42,8 +39,9 @@ public class ResourceServlet extends StaticServlet {
   }
 
   @Override
-  protected Optional<StaticResource> getStaticResource(HttpServletRequest request) {
-    final var path = FAVICON_PATH.equals(request.getRequestURI()) ? "/icons" + FAVICON_PATH : request.getPathInfo();
+  protected Optional<Resource> getStaticResource(HttpServletRequest request) {
+    @SuppressWarnings("squid:S1075") // how can you not hardcode /favicon.ico, if that is exactly what we are looking for?
+    final var path = ("/"+ReservedPaths.FAVICON_PATH).equals(request.getRequestURI()) ? "/icons/" + ReservedPaths.FAVICON_PATH : request.getPathInfo();
 
     return satanise(path)
         .map(this.getClass().getClassLoader()::getResource)

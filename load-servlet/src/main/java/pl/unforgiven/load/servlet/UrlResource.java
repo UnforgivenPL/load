@@ -9,20 +9,24 @@ import java.net.URL;
 import java.util.Optional;
 
 /**
- * Straightforward implementation of {@link StaticResource} to work with URL resources.
+ * Straightforward implementation of {@link Resource} to work with URL resources.
  * @author miki
  * @since 2021-10-05
  */
-public class UrlResource implements StaticResource {
+class UrlResource implements Resource {
 
   /**
    * Creates the {@link UrlResource} if everything went fine.
    * @param url Url to create resource for.
    * @return The resource, if successful. All exceptions are eaten, but logged.
    */
-  public static Optional<UrlResource> of(URL url) {
+  static Optional<UrlResource> of(URL url) {
     try {
       return Optional.of(new UrlResource(url));
+    }
+    catch (NullPointerException npe) {
+      LOGGER.error("cannot create UrlResource out of null url {}", url, npe);
+      return Optional.empty();
     }
     catch (IOException ioe) {
       LOGGER.error("could not create UrlResource out of {}", url, ioe);
