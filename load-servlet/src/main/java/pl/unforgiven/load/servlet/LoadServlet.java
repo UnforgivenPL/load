@@ -19,7 +19,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Optional;
 
-@WebServlet(value = "/", loadOnStartup = 1)
+/**
+ * Main servlet for the entire framework.
+ *
+ * @author miki
+ * @since 2021-02-24
+ */
+@WebServlet(value = "/", loadOnStartup = 2)
 public class LoadServlet extends HttpServlet {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(LoadServlet.class);
@@ -49,7 +55,7 @@ public class LoadServlet extends HttpServlet {
           this.processOutput((Node) output, resp);
         else resp.getOutputStream().println(output.toString());
       }
-      else resp.getOutputStream().print("no LoadPage found for path: "+requestUri);
+      else resp.sendError(404, "no LoadPage or resource found for path: " + requestUri);
     } catch (IOException ioe) {
       LOGGER.error("could not write output", ioe);
     } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
