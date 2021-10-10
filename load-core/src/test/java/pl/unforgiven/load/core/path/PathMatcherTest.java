@@ -77,7 +77,6 @@ class PathMatcherTest {
     this.assertOneParameter("num", "FF");
     Stream.of("some-things", "somethings", "some-Ff-things", "nope", "", "some-19a23D-thing")
         .forEach(text -> Assertions.assertFalse(matcher.isMatching("some-{num:[A-F0-9]+}-things", text, this.parameters)));
-
   }
 
 }

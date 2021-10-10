@@ -15,6 +15,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+/**
+ * Matches paths to {@link LoadPage}s.
+ * @author miki
+ */
 public class PathMatcher {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(PathMatcher.class);
@@ -52,14 +56,9 @@ public class PathMatcher {
       else if(matches.size() == 1)
         return Optional.of(matches.get(0));
       // otherwise, attempt to sort and return first
-      else return matches.stream().min(this::pathMatchComparator);
+      else return matches.stream().min(PathMatch.COMPARATOR);
     }
 
-  }
-
-  private int pathMatchComparator(PathMatch first, PathMatch second) {
-    final int result = Integer.compare(first.getMatchingAnnotation().priority(), second.getMatchingAnnotation().priority());
-    return result == 0 ? first.getMatchingType().getName().compareTo(second.getMatchingType().getName()) : result;
   }
 
   private List<PathMatch> findMatchingPaths(Class<? extends LoadPage> page, String[] path) {

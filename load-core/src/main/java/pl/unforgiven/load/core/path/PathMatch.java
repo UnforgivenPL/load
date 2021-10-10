@@ -3,6 +3,7 @@ package pl.unforgiven.load.core.path;
 import pl.unforgiven.load.core.LoadPage;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -12,7 +13,9 @@ import java.util.Objects;
  * @author miki
  * @since 2021-02-25
  */
-public final class PathMatch {
+public final class PathMatch implements Comparable<PathMatch> {
+
+  public static final Comparator<PathMatch> COMPARATOR = Comparator.comparingInt((PathMatch pathMatch) -> pathMatch.getMatchingAnnotation().priority()).thenComparing(pathMatch -> pathMatch.getMatchingType().getName());
 
   private final Path matchingAnnotation;
 
@@ -60,5 +63,10 @@ public final class PathMatch {
   @Override
   public int hashCode() {
     return Objects.hash(getMatchingAnnotation(), getMatchingType(), getMatchingPath(), getParameters());
+  }
+
+  @Override
+  public int compareTo(PathMatch o) {
+    return COMPARATOR.compare(this, o);
   }
 }
