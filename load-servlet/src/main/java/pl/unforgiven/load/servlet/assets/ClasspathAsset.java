@@ -32,7 +32,7 @@ public class ClasspathAsset implements LoadAsset {
 
   @Override
   public String getPath() {
-    return String.join("/", "", ReservedPaths.STATIC_PATH, this.name);
+    return String.join(SEPARATOR, "", ReservedPaths.STATIC_PATH, this.name);
   }
 
   @Override
