@@ -2,6 +2,7 @@ package pl.unforgiven.load.core.html;
 
 /**
  * Basic {@code <ul>} element.
+ * Every node added to this will be wrapped inside {@code <li>}.
  * @author miki
  * @since 2021-10-10
  */
